@@ -1,0 +1,87 @@
+.dialog-header {
+    margin-top: -20px;
+    padding-top: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+}
+
+.dialog-doc-size {
+    width: 600px;
+    height: 650px;
+}
+
+.dialog-inst-size {
+    width: 450px;
+    height: 380px;
+}
+
+.dialog-user-size {
+    width: 490px;
+    height: 750px;
+}
+
+.dialog-proj-size {
+    width: 490px;
+    height: 650px;
+}
+
+.right-center-align-input {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-left: auto;
+}
+
+.larger-text-field {
+    width: 280px;
+}
+
+.no-margin-area {
+    margin: 0;
+    padding: 0;
+}
+
+.text-area-small-font {
+    font-size: 14px;
+    width: 280px;
+    margin-top: -10px;
+}
+
+.flex-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.cancel-button {
+    align-items: center;
+    margin-left: auto;
+}
+
+.horizontal-line {
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.combo-box-role {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.flex-group-role {
+    margin:0;
+    padding:0;
+}
+
+.project-tree-map {
+    margin-top: 76px;
+}
+
+.reports-tree-map {
+    margin-top: 20px;
+    height: 600px;
+}

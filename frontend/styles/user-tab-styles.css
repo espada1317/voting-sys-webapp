@@ -1,0 +1,13 @@
+.column-with-line::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    border-left: 1px solid #000;
+    box-sizing: border-box;
+}
+
+[part~='cell']:not([part~='details-cell']) {
+    border-right: 1px solid #e0e0e0;
+}

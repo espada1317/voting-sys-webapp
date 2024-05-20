@@ -1,0 +1,17 @@
+.button-top-padding {
+    margin-top: 20px;
+}
+
+.banking-pages-header {
+    font-size: 26px;
+    text-align: center;
+    font-weight: normal;
+}
+
+.flex-display-logout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: 15px;
+}
