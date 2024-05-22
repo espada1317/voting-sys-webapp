@@ -1,12 +1,9 @@
 package voting.sys.webapp.component.navbar;
 
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.TabSheet;
-import voting.sys.webapp.component.tab.ElectionTab;
 import voting.sys.webapp.component.tab.UsersTablePage;
 
-import static voting.sys.webapp.util.TabValuesConstant.NAVBAR_ADMINISTRATION_TAB_CANDIDATE_LABEL;
 import static voting.sys.webapp.util.TabValuesConstant.NAVBAR_ADMINISTRATION_TAB_USER_LABEL;
 
 public class AdministrationTab extends VerticalLayout {
@@ -15,8 +12,6 @@ public class AdministrationTab extends VerticalLayout {
         TabSheet tabSheet = new TabSheet();
         tabSheet.setSizeFull();
 
-        tabSheet.add(NAVBAR_ADMINISTRATION_TAB_CANDIDATE_LABEL,
-                new ElectionTab());
         tabSheet.add(NAVBAR_ADMINISTRATION_TAB_USER_LABEL,
                 new UsersTablePage());
 

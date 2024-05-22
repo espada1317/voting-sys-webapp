@@ -12,6 +12,8 @@ public class ServiceApiConstant {
     public static final String API_PUT_USER_RESET_PASS_URL = "http://localhost:8080/users/resetPassword/";
 
     public static final String API_GET_ELECTION_LIST_URL = "http://localhost:8081/election";
+    public static final String API_POST_ELECTION_VOTE_URL = "http://localhost:8081/election/save";
+    public static final String API_GET_ELECTION_CHECK_VOTE_URL = "http://localhost:8081/election/checkVote/";
 
     private ServiceApiConstant() {
     }
