@@ -1,6 +1,7 @@
 package voting.sys.webapp.component.tab;
 
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
@@ -28,12 +29,13 @@ public class ElectionTab extends Div {
 
     private static Button saveButton;
 
-    private static Div statusDiv = new Div();
+    private static Div statusDiv;
 
     public ElectionTab() {
         add(getRadioGroup());
         add(new Div(getSaveButton()));
 
+        statusDiv = new Div();
         statusDiv.setVisible(true);
         add(statusDiv);
 
@@ -45,11 +47,13 @@ public class ElectionTab extends Div {
     }
 
     public static void refreshRadioGroup() {
-        if (electionService.checkElectionVote(getIdnpOfCurrentLoggedUsers())) {
-            radioGroup.setEnabled(false);
-            statusDiv.setText("Voted successfully!");
-            saveButton.setVisible(false);
-        }
+        UI.getCurrent().access(() -> {
+            if (electionService.checkElectionVote(getIdnpOfCurrentLoggedUsers())) {
+                radioGroup.setEnabled(false);
+                statusDiv.setText("Voted successfully!");
+                saveButton.setVisible(false);
+            }
+        });
     }
 
     private static RadioButtonGroup<ElectionItemResponseDto> getRadioGroup() {
@@ -58,7 +62,6 @@ public class ElectionTab extends Div {
 
         List<ElectionItemResponseDto> elections = electionService.getElectionItems();
         radioGroup.setItems(elections);
-        radioGroup.setValue(elections.getFirst());
         radioGroup.setRenderer(new ComponentRenderer<>(electionItem -> {
             Span number = new Span(new Text(electionItem.getId() + ". " + electionItem.getName()));
             Text candidate = new Text("Candidate: " + electionItem.getPerson());

@@ -15,12 +15,6 @@ public class UserTab extends VerticalLayout {
         tabSheet.add(NAVBAR_ADMINISTRATION_TAB_CANDIDATE_LABEL,
                 new ElectionTab());
 
-        tabSheet.addSelectedChangeListener(selectedChangeEvent -> {
-            if (selectedChangeEvent.getSelectedTab().getLabel().equals(NAVBAR_ADMINISTRATION_TAB_CANDIDATE_LABEL)) {
-                ElectionTab.refreshRadioGroup();
-            }
-        });
-
         add(tabSheet);
     }
 
