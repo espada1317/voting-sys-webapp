@@ -31,6 +31,8 @@ public class SecurityConfig extends VaadinWebSecurity {
                         auth -> auth
                                 .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/VAADIN/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/actuator")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/actuator/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/**")).authenticated()
                 )
                 .authenticationProvider(authenticationProvider());
