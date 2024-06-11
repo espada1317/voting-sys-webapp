@@ -1,0 +1,59 @@
+name: Build and Deploy to GKE
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  # GCP Auth settings
+  CREDENTIALS_JSON: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  # GCP Artifact Repository settings
+  REPOSITORY: voting-sys-webapp-repository
+  GAR_LOCATION: europe-west1
+  IMAGE: voting-sys-webapp-image
+  # GCP Cluster Settings
+  GKE_CLUSTER: voting-sys-cluster
+  GKE_ZONE: europe-west1
+  DEPLOYMENT_NAME: voting-sys-webapp-deployment
+
+jobs:
+  deploy-docker-image:
+    name: Deploy Docker Image to GCP Artifact Repository
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate with gcloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ env.CREDENTIALS_JSON }}
+
+      - name: Install the gcloud cli
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+          skip_install: false
+          version: latest
+          install_components: 'gke-gcloud-auth-plugin'
+
+      - name: Build and Push the Docker Image to Artifact Repository
+        run: |
+          gcloud auth configure-docker $GAR_LOCATION-docker.pkg.dev
+          docker build -t $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest .
+          docker push $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest
+
+      - name: Deploy Cluster to GKE
+        env:
+          GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
+        run: |
+          gcloud container clusters get-credentials $GKE_CLUSTER --region $GKE_ZONE
+          
+          sed -i "s/gar-location/$GAR_LOCATION/g" kubernetes/app/2-deployment.yaml
+          sed -i "s/project-id/$PROJECT_ID/g" kubernetes/app/2-deployment.yaml
+          sed -i "s/repository/$REPOSITORY/g" kubernetes/app/2-deployment.yaml
+          sed -i "s/image-name/$IMAGE/g" kubernetes/app/2-deployment.yaml
+          
+          kubectl apply -f kubernetes/app
