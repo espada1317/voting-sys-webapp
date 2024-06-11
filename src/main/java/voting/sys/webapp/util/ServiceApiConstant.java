@@ -1,20 +1,57 @@
 package voting.sys.webapp.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
 public class ServiceApiConstant {
 
-    public static final String API_POST_AUTH_URL = "http://localhost:8080/authenticate";
+    private static String votingSysAuthModule;
+    private static String votingSysElectionModule;
 
-    public static final String API_GET_USER_BY_IDNP_URL = "http://localhost:8080/users/";
-    public static final String API_GET_ALL_USERS_URL = "http://localhost:8080/users";
-    public static final String API_GET_ALL_USER_ROLES_URL = "http://localhost:8080/users/roles";
-    public static final String API_POST_USER_URL = "http://localhost:8080/users";
-    public static final String API_PUT_USER_ENABLEMENT_URL = "http://localhost:8080/users/enablement/";
-    public static final String API_PUT_USER_RESET_PASS_URL = "http://localhost:8080/users/resetPassword/";
+    @Autowired
+    public ServiceApiConstant(AppConfig appConfig) {
+        votingSysAuthModule = appConfig.getVotingSysAuthModule();
+        votingSysElectionModule = appConfig.getVotingSysElectionModule();
+    }
 
-    public static final String API_GET_ELECTION_LIST_URL = "http://localhost:8081/election";
-    public static final String API_POST_ELECTION_VOTE_URL = "http://localhost:8081/election/save";
-    public static final String API_GET_ELECTION_CHECK_VOTE_URL = "http://localhost:8081/election/checkVote/";
+    public static String getApiPostAuthUrl() {
+        return votingSysAuthModule + "/authenticate";
+    }
 
-    private ServiceApiConstant() {
+    public static String getApiGetUserByIdnpUrl() {
+        return votingSysAuthModule + "/users/";
+    }
+
+    public static String getApiGetAllUsersUrl() {
+        return votingSysAuthModule + "/users";
+    }
+
+    public static String getApiGetAllUserRolesUrl() {
+        return votingSysAuthModule + "/users/roles";
+    }
+
+    public static String getApiPostUserUrl() {
+        return votingSysAuthModule + "/users";
+    }
+
+    public static String getApiPutUserEnablementUrl() {
+        return votingSysAuthModule + "/users/enablement/";
+    }
+
+    public static String getApiPutUserResetPassUrl() {
+        return votingSysAuthModule + "/users/resetPassword/";
+    }
+
+    public static String getApiGetElectionListUrl() {
+        return votingSysElectionModule + "/election";
+    }
+
+    public static String getApiPostElectionVoteUrl() {
+        return votingSysElectionModule + "/election/save";
+    }
+
+    public static String getApiGetElectionCheckVoteUrl() {
+        return votingSysElectionModule + "/election/checkVote/";
     }
 }

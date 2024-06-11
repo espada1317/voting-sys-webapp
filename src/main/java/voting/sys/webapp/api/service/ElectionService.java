@@ -12,14 +12,12 @@ import voting.sys.webapp.api.exception.BadRequestException;
 import voting.sys.webapp.api.exception.ExceptionResponse;
 import voting.sys.webapp.api.exception.ExceptionResponseUtil;
 import voting.sys.webapp.api.security.CurrentToken;
+import voting.sys.webapp.util.ServiceApiConstant;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static voting.sys.webapp.util.ServiceApiConstant.API_GET_ELECTION_CHECK_VOTE_URL;
-import static voting.sys.webapp.util.ServiceApiConstant.API_GET_ELECTION_LIST_URL;
-import static voting.sys.webapp.util.ServiceApiConstant.API_POST_ELECTION_VOTE_URL;
 
 public class ElectionService {
 
@@ -27,7 +25,7 @@ public class ElectionService {
 
     public List<ElectionItemResponseDto> getElectionItems() {
         try {
-            return Arrays.stream(Objects.requireNonNull(restTemplate.exchange(API_GET_ELECTION_LIST_URL,
+            return Arrays.stream(Objects.requireNonNull(restTemplate.exchange(ServiceApiConstant.getApiGetElectionListUrl(),
                                     HttpMethod.GET,
                                     setHeader(),
                                     ElectionItemResponseDto[].class)
@@ -40,7 +38,7 @@ public class ElectionService {
 
     public boolean saveElectionVote(ElectionItemRequestDto electionItemRequestDto) {
         try {
-            restTemplate.exchange(API_POST_ELECTION_VOTE_URL,
+            restTemplate.exchange(ServiceApiConstant.getApiPostElectionVoteUrl(),
                     HttpMethod.POST,
                     setHeader(electionItemRequestDto),
                     Long.class);
@@ -54,7 +52,7 @@ public class ElectionService {
     public boolean checkElectionVote(String idnp) {
         try {
             return Boolean.TRUE.equals(
-                    Objects.requireNonNull(restTemplate.exchange(API_GET_ELECTION_CHECK_VOTE_URL + idnp,
+                    Objects.requireNonNull(restTemplate.exchange(ServiceApiConstant.getApiGetElectionCheckVoteUrl() + idnp,
                                     HttpMethod.GET,
                                     setHeader(),
                                     boolean.class))

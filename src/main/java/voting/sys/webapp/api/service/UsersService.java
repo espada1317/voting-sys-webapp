@@ -13,17 +13,11 @@ import voting.sys.webapp.api.exception.BadRequestException;
 import voting.sys.webapp.api.exception.ExceptionResponse;
 import voting.sys.webapp.api.exception.ExceptionResponseUtil;
 import voting.sys.webapp.api.security.CurrentToken;
+import voting.sys.webapp.util.ServiceApiConstant;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-
-import static voting.sys.webapp.util.ServiceApiConstant.API_GET_ALL_USERS_URL;
-import static voting.sys.webapp.util.ServiceApiConstant.API_GET_ALL_USER_ROLES_URL;
-import static voting.sys.webapp.util.ServiceApiConstant.API_GET_USER_BY_IDNP_URL;
-import static voting.sys.webapp.util.ServiceApiConstant.API_POST_USER_URL;
-import static voting.sys.webapp.util.ServiceApiConstant.API_PUT_USER_ENABLEMENT_URL;
-import static voting.sys.webapp.util.ServiceApiConstant.API_PUT_USER_RESET_PASS_URL;
 
 public class UsersService {
 
@@ -31,7 +25,7 @@ public class UsersService {
 
     public UsersResponseDto getUserByIdnp(String idnp) {
         try {
-            return Objects.requireNonNull(restTemplate.exchange(API_GET_USER_BY_IDNP_URL + idnp,
+            return Objects.requireNonNull(restTemplate.exchange(ServiceApiConstant.getApiGetUserByIdnpUrl() + idnp,
                             HttpMethod.GET,
                             setHeader(),
                             UsersResponseDto.class)
@@ -43,7 +37,7 @@ public class UsersService {
 
     public List<UserRoles> getRoles() {
         try {
-            return Arrays.stream(Objects.requireNonNull(restTemplate.exchange(API_GET_ALL_USER_ROLES_URL,
+            return Arrays.stream(Objects.requireNonNull(restTemplate.exchange(ServiceApiConstant.getApiGetAllUserRolesUrl(),
                                     HttpMethod.GET,
                                     setHeader(),
                                     UserRoles[].class)
@@ -56,7 +50,7 @@ public class UsersService {
 
     public boolean save(UsersRequestDto usersRequestDto) {
         try {
-            restTemplate.exchange(API_POST_USER_URL,
+            restTemplate.exchange(ServiceApiConstant.getApiPostUserUrl(),
                     HttpMethod.POST,
                     setHeader(usersRequestDto),
                     UsersRequestDto.class);
@@ -69,7 +63,7 @@ public class UsersService {
 
     public List<UsersResponseDto> getAll() {
         try {
-            return Arrays.stream(Objects.requireNonNull(restTemplate.exchange(API_GET_ALL_USERS_URL,
+            return Arrays.stream(Objects.requireNonNull(restTemplate.exchange(ServiceApiConstant.getApiGetAllUsersUrl(),
                                     HttpMethod.GET,
                                     setHeader(),
                                     UsersResponseDto[].class)
@@ -82,7 +76,7 @@ public class UsersService {
 
     public void modifyEnablement(Long id) {
         try {
-            restTemplate.exchange(API_PUT_USER_ENABLEMENT_URL + id,
+            restTemplate.exchange(ServiceApiConstant.getApiPutUserEnablementUrl() + id,
                     HttpMethod.PUT,
                     setHeader(),
                     void.class);
@@ -93,7 +87,7 @@ public class UsersService {
 
     public void resetPassword(Long id) {
         try {
-            restTemplate.exchange(API_PUT_USER_RESET_PASS_URL + id,
+            restTemplate.exchange(ServiceApiConstant.getApiPutUserResetPassUrl() + id,
                     HttpMethod.PUT,
                     setHeader(),
                     void.class);

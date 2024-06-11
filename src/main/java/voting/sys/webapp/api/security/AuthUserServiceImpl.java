@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import voting.sys.webapp.api.dto.request.AuthRequestDto;
-
-import static voting.sys.webapp.util.ServiceApiConstant.API_POST_AUTH_URL;
+import voting.sys.webapp.util.ServiceApiConstant;
 
 @Slf4j
 @Service
@@ -20,7 +19,7 @@ public class AuthUserServiceImpl {
 
     public String retrieveJwtToken(AuthRequestDto authRequestDto) {
         try {
-            return restTemplate.exchange(API_POST_AUTH_URL,
+            return restTemplate.exchange(ServiceApiConstant.getApiPostAuthUrl(),
                     HttpMethod.POST,
                     setHeader(authRequestDto),
                     String.class).getBody();
